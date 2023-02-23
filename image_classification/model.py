@@ -3,7 +3,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.utils import plot_model
 
-from data import image_size, train_data, test_data
+from preprocessing import image_size, train_data, test_data
 
 # Prefetch samples in GPU memory helps maximize GPU utilization
 train_data = train_data.prefetch(tf.data.AUTOTUNE)
