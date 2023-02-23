@@ -17,7 +17,7 @@ Publicly available at the following link: https://download.microsoft.com/downloa
 │   └── pet_images
 │         ├── cat
 │         └── dog
-├── data.py
+├── preprocessing.py
 └── model.py
 
 ## Setting up the environment
