@@ -4,7 +4,7 @@
 Sandrine Soeharjono (sandrinesoeharjono@hotmail.com), 2023.
 
 ## Objective
-Build an image classification model using the [Keras](https://keras.io/) and [Tensorflow](https://www.tensorflow.org/) libraries in Python to differentiate between two groups: cats and dogs.
+Build and train a binary image classifier using the [Keras](https://keras.io/) from [Tensorflow](https://www.tensorflow.org/) library in Python to differentiate between two groups: cats and dogs.
 
 ## Dataset
 Publicly available at the following link: https://download.microsoft.com/download/3/E/1/3E1C3F21-ECDB-4869-8368-6DEBA77B919F/kagglecatsanddogs_5340.zip
@@ -14,7 +14,7 @@ Publicly available at the following link: https://download.microsoft.com/downloa
 ├── README.md
 ├── data
 │   ├── CDLA-Permissive-2.0.pdf
-│   ├── pet_images
+│   └── pet_images
 │         ├── cat
 │         └── dog
 ├── data.py

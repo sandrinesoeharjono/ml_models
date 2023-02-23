@@ -5,12 +5,16 @@ from tensorflow.keras.utils import plot_model
 
 from data import image_size, train_data, test_data
 
+# Prefetch samples in GPU memory helps maximize GPU utilization
+train_data = train_data.prefetch(tf.data.AUTOTUNE)
+val_ds = test_data.prefetch(tf.data.AUTOTUNE)
+
 print("Defining the model...")
 def make_model(input_shape, num_classes):
     inputs = keras.Input(shape=input_shape)
 
     # Entry block
-    x = layers.Rescaling(1.0 / 255)(inputs)
+    x = layers.Rescaling(1.0 / 255)(inputs) # normalize to [0,1]
     x = layers.Conv2D(128, 3, strides=2, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
