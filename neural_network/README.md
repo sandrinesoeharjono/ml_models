@@ -13,15 +13,17 @@ Manipulate gene expression datasets to use into various Neural Network (NN) mode
 - **GSE**: The dataset was submitted to NCBI on Oct 7, 2021 by María José Jiménez (mjjimenez@cnio.es) and is publicly available at the following link: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE185513. The Homo Sapiens data from breast cancer PDX cells was sequenced using NextSeq 550. (TO COMPLETE)
 
 ## Repo structure
+```
 ├── environment.yml   
 ├── README.md   
 ├── data   
- │  ├── Droso_breeding_labels.npy   
- │  ├── Droso_breeding_genex.npy   
- │  └── metadata.csv   
+│  ├── Droso_breeding_labels.npy   
+│  ├── Droso_breeding_genex.npy   
+│  └── metadata.csv   
 └── nn_src   
     ├── binary.py   
     └── multiclass.py   
+```
 
 ## Setting up the environment
   1. Install miniconda by following the instructions [here](https://python-poetry.org/docs/#installation).
