@@ -106,3 +106,9 @@ grid_predictions = grid.predict(X_test)
 logger.info("Accuracy: {:.2f}".format(accuracy_score(y_test, grid_predictions)))
 logger.info("Best parameters:")
 print(grid.best_params_)
+
+# Show all results
+means = mlp_clf.cv_results_['mean_test_score']
+stds = mlp_clf.cv_results_['std_test_score']
+for mean, std, params in zip(means, stds, mlp_clf.cv_results_['params']):
+    logger.info("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
