@@ -26,6 +26,7 @@ train_size = 0.7
 test_size = 1.0 - train_size
 n_iter = 300
 act_fn = "relu"
+solver = "adam"
 
 # Load dataset 
 X = np.load(DATA_ROOT / "Droso_breeding_genex.npy", allow_pickle=True).astype(float)
@@ -52,7 +53,7 @@ mlp_clf = MLPClassifier(
     hidden_layer_sizes=(150,100,50),
     max_iter=n_iter,
     activation=act_fn,
-    solver="adam"
+    solver=solver
 )
 mlp_clf.fit(X, y)
 
@@ -79,7 +80,7 @@ for i in range(n_classes):
 colors = cycle(["blue", "red", "green"])
 for i, color in zip(range(n_classes), colors):
     plt.plot(fpr[i], tpr[i], color=color, lw=2,
-             label="ROC curve of class {0} (area = {1:0.2f})".format(i, roc_auc[i]))
+             label="ROC curve of class {0} (AUC = {1:0.2f})".format(i, roc_auc[i]))
 plt.plot([0, 1], [0, 1], "k--", lw=2)
 plt.xlim([-0.05, 1.0])
 plt.ylim([0.0, 1.05])
@@ -90,17 +91,18 @@ plt.legend(loc="lower right")
 plt.show()
 
 # Perform hyperparameter tuning
+logger.info("Performing hyperparameter tuning...")
 param_grid = {
     "hidden_layer_sizes": [(150,100,50), (120,80,40), (100,50,30)],
     "max_iter": [50, 100, 150],
     "activation": ["tanh", "relu"],
     "solver": ["sgd", "adam"],
     "alpha": [0.0001, 0.05],
-    "learning_rate": ["constant","adaptive"],
+    "learning_rate": ["constant", "adaptive"],
 }
 grid = GridSearchCV(mlp_clf, param_grid, n_jobs=-1, cv=5)
 grid.fit(X_train, y_train)
 grid_predictions = grid.predict(X_test) 
 logger.info("Accuracy: {:.2f}".format(accuracy_score(y_test, grid_predictions)))
 logger.info("Best parameters:")
-logger.info(grid.best_params_)
+print(grid.best_params_)
