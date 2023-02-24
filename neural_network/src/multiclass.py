@@ -1,5 +1,7 @@
 from itertools import cycle
 from pathlib import Path
+from structlog.stdlib import get_logger
+
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler, label_binarize
@@ -12,6 +14,8 @@ from sklearn.metrics import (
 
 import matplotlib.pyplot as plt
 import numpy as np
+
+logger = get_logger()
 
 # Define directories of interest
 working_dir = Path(__file__).resolve()
@@ -32,18 +36,18 @@ n_classes = len(set(y))
 y = label_binarize(y, classes=[0, 1, 2])
 
 # Split into train & test set
-print(f"We are working with a dataset of shape {X.shape}. Splitting into train/test set using {train_size:.1f}:{test_size:.1f} ratio.")
+logger.info(f"We are working with a dataset of shape {X.shape}. Splitting into train/test set using {train_size:.1f}:{test_size:.1f} ratio.")
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=123)
 
 # Apply standardization to training & test data
-print("Standardizing dataset...")
+logger.info("Standardizing dataset...")
 scaler = StandardScaler()  
 scaler.fit(X_train)  
 X_train = scaler.transform(X_train)  
 X_test = scaler.transform(X_test)
 
 # Create a Multi-layer Perceptron (MLP) classifier
-print("Creating multi-class MLP classifier...")
+logger.info("Creating multi-class MLP classifier...")
 mlp_clf = MLPClassifier(
     hidden_layer_sizes=(150,100,50),
     max_iter=n_iter,
@@ -54,18 +58,18 @@ mlp_clf.fit(X, y)
 
 # Use model to make predictions on test set
 y_pred = mlp_clf.predict(X_test)
-print(f"Model predicted {X_test.shape[0]} labels onto the test dataset.")
+logger.info(f"Model predicted {X_test.shape[0]} labels onto the test dataset.")
 
 # Check how the model performed
 y_score = mlp_clf.predict_proba(X_test)
 prob_estimates = y_score[::,1]
 accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy: {accuracy_score:.2f}")
-print(f"Probability estimates: {prob_estimates}")
+logger.info(f"Accuracy: {accuracy:.2f}")
+logger.info(f"Probability estimates: {prob_estimates}")
 print(classification_report(y_test, y_pred))
 
 # Visualize the ROC curve for each individual class 
-print("Plotting the ROC curve...")
+logger.info("Plotting the ROC curve...")
 fpr = dict()
 tpr = dict()
 roc_auc = dict()
@@ -97,6 +101,6 @@ param_grid = {
 grid = GridSearchCV(mlp_clf, param_grid, n_jobs=-1, cv=5)
 grid.fit(X_train, y_train)
 grid_predictions = grid.predict(X_test) 
-print("Accuracy: {:.2f}".format(accuracy_score(y_test, grid_predictions)))
-print("Best parameters:")
-print(grid.best_params_)
+logger.info("Accuracy: {:.2f}".format(accuracy_score(y_test, grid_predictions)))
+logger.info("Best parameters:")
+logger.info(grid.best_params_)

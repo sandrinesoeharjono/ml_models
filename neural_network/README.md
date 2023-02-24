@@ -29,5 +29,5 @@ Manipulate gene expression datasets to use into various Neural Network (NN) mode
     `conda env create` 
   3. Activate the environment:  
     `conda activate neural_network` 
-  4. Run the script:
-    `python model.py`
+  4. Run the script of interest:
+    `python src/binary.py`
