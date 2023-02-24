@@ -16,9 +16,9 @@ Manipulate gene expression datasets to use into various Neural Network (NN) mode
 ├── environment.yml   
 ├── README.md   
 ├── data   
-│   ├── Droso_breeding_labels.npy   
-│   ├── Droso_breeding_genex.npy   
-│   └── metadata.csv   
+ │  ├── Droso_breeding_labels.npy   
+ │  ├── Droso_breeding_genex.npy   
+ │  └── metadata.csv   
 └── nn_src   
     ├── binary.py   
     └── multiclass.py   
